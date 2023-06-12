@@ -1,0 +1,16 @@
+.vscode
+lib/
+node_modules/
+.nyc_output
+coverage
+report.xml
+lint-results.xml
+.env.libraries
+kpis-dsv/
+aura-mini-bot/
+*.tgz
+local-dependencies/uninstall-list.json
+*.heapsnapshot
+.npmrc
+__azurite_*
+deploymentTemplates/
