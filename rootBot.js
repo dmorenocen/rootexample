@@ -87,7 +87,7 @@ class RootBot extends ActivityHandler {
             await context.sendActivity("Recibido un fin de conversacion");
 
             // We are back at the root
-            await context.sendActivity('De vuelta al root bot. Di \'skill\' y te enviaré de nuevo a ella');
+            await context.sendActivity("De vuelta al root bot. Di 'recomender', reenviaré tus preguntas a una skill experta en teléfonos móviles. Y si dices 'echo' te responderé con lo mismo");
 
             // Save conversation state
             await this.conversationState.saveChanges(context, true);
