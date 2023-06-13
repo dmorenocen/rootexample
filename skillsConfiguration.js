@@ -7,15 +7,20 @@
 class SkillsConfiguration {
     constructor() {
         this.skillsData = {};
-
-        // Note: we only have one skill in this sample but we could load more if needed.
-        const botFrameworkSkill = {
-            id: process.env.SkillId,
-            appId: process.env.SkillAppId,
-            skillEndpoint: process.env.SkillEndpoint
+        // Skill OpenIA
+        const skillOpenIA = {
+            id: process.env.SkillOpenIAId,
+            appId: process.env.SkillOpenIAAppId,
+            skillEndpoint: process.env.SkillOpenIAEndPoint
         };
-
-        this.skillsData[botFrameworkSkill.id] = botFrameworkSkill;
+        this.skillsData[skillOpenIA.id] = skillOpenIA;
+        // Skill Echo
+        const skillEcho = {
+            id: process.env.SkillEchoId,
+            appId: process.env.SkillEchoAppId,
+            skillEndpoint: process.env.SkillEchoEndPoint
+        };
+        this.skillsData[skillEcho.id] = skillEcho;
 
         this.skillHostEndpointValue = process.env.SkillHostEndpoint;
         if (!this.skillHostEndpointValue) {

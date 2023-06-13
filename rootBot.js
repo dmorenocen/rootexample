@@ -18,9 +18,10 @@ class RootBot extends ActivityHandler {
 
         this.botId = process.env.MicrosoftAppId;
 
-        // We use a single skill in this example.
-        const targetSkillId = 'egiSkillBot';
-        this.targetSkill = skillsConfig.skills[targetSkillId];
+        const targetSkillOpenIAId = process.env.SkillOpenIAId;
+        this.targetSkillOpenIA = skillsConfig.skills[targetSkillOpenIAId];
+        const targetSkillEchoId = process.env.SkillEchoId;
+        this.targetSkillEcho =  skillsConfig.skills[targetSkillEchoId];
 
         // Create state property to track the active skill
         this.activeSkillProperty = this.conversationState.createProperty(RootBot.ActiveSkillPropertyName);
@@ -44,16 +45,24 @@ class RootBot extends ActivityHandler {
 
         // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
         this.onMessage(async (context, next) => {
-            if (context.activity.text.toLowerCase() === 'skill') {
-                await context.sendActivity('Estableciendo la conexion con la skill ...');
+            if (context.activity.text.toLowerCase() === 'recomender') {
+                await context.sendActivity('Estableciendo la conexion con la skill openIA ...');
 
                 // Set active skill
-                await this.activeSkillProperty.set(context, this.targetSkill);
+                await this.activeSkillProperty.set(context, this.targetSkillOpenIA);
 
                 // Send the activity to the skill
-                await this.sendToSkill(context, this.targetSkill);
+                await this.sendToSkill(context, this.targetSkillOpenIA);
+            } else if (context.activity.text.toLowerCase() === 'echo') {
+                await context.sendActivity('Estableciendo la conexion con la skill echo ...');
+
+                // Set active skill
+                await this.activeSkillProperty.set(context, this.targetSkillEcho);
+
+                // Send the activity to the skill
+                await this.sendToSkill(context, this.targetSkillEcho);
             } else {
-                await context.sendActivity("Soy el root bot. Si dices 'skill', reenviaré tus preguntas a una skill experta en teléfonos móviles");
+                await context.sendActivity("Soy el root bot. Si dices 'recomender', reenviaré tus preguntas a una skill experta en teléfonos móviles. Y si dices 'echo' te responderé con lo mismo");
             }
 
             // By calling next() you ensure that the next BotHandler is run.
@@ -78,7 +87,7 @@ class RootBot extends ActivityHandler {
             await context.sendActivity("Recibido un fin de conversacion");
 
             // We are back at the root
-            await context.sendActivity('De vuelta al root bot. Di \'skill\' y te enviaré de nuevo a ella');
+            await context.sendActivity("De vuelta al root bot. Di 'recomender', reenviaré tus preguntas a una skill experta en teléfonos móviles. Y si dices 'echo' te responderé con lo mismo");
 
             // Save conversation state
             await this.conversationState.saveChanges(context, true);
